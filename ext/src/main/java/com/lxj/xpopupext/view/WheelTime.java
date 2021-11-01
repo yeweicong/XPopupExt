@@ -6,6 +6,7 @@ import com.contrarywind.view.WheelView;
 import com.lxj.xpopupext.R;
 import com.lxj.xpopupext.adapter.ArrayWheelAdapter;
 import com.lxj.xpopupext.adapter.NumericWheelAdapter;
+import com.lxj.xpopupext.adapter.NumericWheelIntervalAdapter;
 import com.lxj.xpopupext.listener.ISelectTimeCallback;
 import com.lxj.xpopupext.utils.ChinaDate;
 import com.lxj.xpopupext.utils.LunarCalendar;
@@ -43,6 +44,8 @@ public class WheelTime {
     private int startDay = DEFAULT_START_DAY;
     private int endDay = DEFAULT_END_DAY; //表示31天的
     private int currentYear;
+
+    private int minInterval;
 
     private int textSize;
 
@@ -362,9 +365,9 @@ public class WheelTime {
         wv_hours.setGravity(gravity);
         //分
         wv_minutes = (WheelView) view.findViewById(R.id.min);
-        wv_minutes.setAdapter(new NumericWheelAdapter(0, 59));
+        wv_minutes.setAdapter(new NumericWheelIntervalAdapter(0, 59, minInterval));
 
-        wv_minutes.setCurrentItem(m);
+        wv_minutes.setCurrentItem(wv_minutes.getAdapter().indexOf(m));
         wv_minutes.setGravity(gravity);
         //秒
         wv_seconds = (WheelView) view.findViewById(R.id.second);
@@ -657,14 +660,14 @@ public class WheelTime {
                         .append((wv_month.getCurrentItem() + startMonth)).append("-")
                         .append((wv_day.getCurrentItem() + startDay)).append(" ")
                         .append(wv_hours.getCurrentItem()).append(":")
-                        .append(wv_minutes.getCurrentItem()).append(":")
+                        .append(wv_minutes.getAdapter().getItem(wv_minutes.getCurrentItem())).append(":")
                         .append(wv_seconds.getCurrentItem());
             } else {
                 sb.append((wv_year.getCurrentItem() + startYear)).append("-")
                         .append((wv_month.getCurrentItem() + startMonth)).append("-")
                         .append((wv_day.getCurrentItem() + 1)).append(" ")
                         .append(wv_hours.getCurrentItem()).append(":")
-                        .append(wv_minutes.getCurrentItem()).append(":")
+                        .append(wv_minutes.getAdapter().getItem(wv_minutes.getCurrentItem())).append(":")
                         .append(wv_seconds.getCurrentItem());
             }
 
@@ -673,7 +676,7 @@ public class WheelTime {
                     .append((wv_month.getCurrentItem() + 1)).append("-")
                     .append((wv_day.getCurrentItem() + 1)).append(" ")
                     .append(wv_hours.getCurrentItem()).append(":")
-                    .append(wv_minutes.getCurrentItem()).append(":")
+                    .append(wv_minutes.getAdapter().getItem(wv_minutes.getCurrentItem())).append(":")
                     .append(wv_seconds.getCurrentItem());
         }
 
@@ -735,6 +738,9 @@ public class WheelTime {
         this.endYear = endYear;
     }
 
+    public void setMinInterval(int minInterval) {
+        this.minInterval = minInterval;
+    }
 
     public void setRangDate(Calendar startDate, Calendar endDate) {
 

@@ -40,6 +40,10 @@ public class TimePickerPopup extends BottomPopupView {
     public float lineSpace = 2.4f; // 条目间距倍数 默认2
     public int textColorOut = 0xFFa8a8a8; //分割线以外的文字颜色
     public int textColorCenter = 0xFF2a2a2a; //分割线之间的文字颜色
+
+    private int minInterval;
+    // 是否循环滚动 默认是
+    private boolean cyclic = true;
     public TimePickerPopup(@NonNull Context context) {
         super(context);
     }
@@ -166,6 +170,8 @@ public class TimePickerPopup extends BottomPopupView {
             applyDateRange();
         }
 
+        wheelTime.setMinInterval(minInterval);
+
         setTime();
         if(showLabel) wheelTime.setLabels(getResources().getString(R.string._xpopup_ext_year),
                 getResources().getString(R.string._xpopup_ext_month),
@@ -175,13 +181,14 @@ public class TimePickerPopup extends BottomPopupView {
                 getResources().getString(R.string._xpopup_ext_seconds));
         wheelTime.setItemsVisible(itemsVisibleCount);
         wheelTime.setAlphaGradient(true);
-        wheelTime.setCyclic(true);
+        wheelTime.setCyclic(cyclic);
         wheelTime.setDividerColor( popupInfo.isDarkTheme ? Color.parseColor("#444444") : dividerColor);
         wheelTime.setDividerType(WheelView.DividerType.FILL);
         wheelTime.setLineSpacingMultiplier(lineSpace);
         wheelTime.setTextColorOut(textColorOut);
         wheelTime.setTextColorCenter(popupInfo.isDarkTheme ? Color.parseColor("#CCCCCC") : textColorCenter);
         wheelTime.isCenterLabel(false);
+
     }
 
     boolean showLabel = true;
@@ -249,6 +256,21 @@ public class TimePickerPopup extends BottomPopupView {
     public TimePickerPopup setDateRange(Calendar startDate, Calendar endDate) {
         this.startDate = startDate;
         this.endDate = endDate;
+        return this;
+    }
+
+    public TimePickerPopup setCyclic(boolean cyclic) {
+        this.cyclic = cyclic;
+        return this;
+    }
+
+    /**
+     * 设置分钟间隔
+     * @param minInterval
+     * @return
+     */
+    public TimePickerPopup setMinInterval(int minInterval) {
+        this.minInterval = minInterval;
         return this;
     }
 
