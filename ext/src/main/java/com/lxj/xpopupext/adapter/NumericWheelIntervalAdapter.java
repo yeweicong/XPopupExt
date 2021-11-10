@@ -43,7 +43,7 @@ public class NumericWheelIntervalAdapter extends NumericWheelAdapter {
 	@Override
 	public int getItemsCount() {
 		if(intervalValue > 0){
-			return Math.round((maxValue - minValue) / (float)intervalValue) + 1;
+			return Math.round((maxValue - minValue) / (float)intervalValue);
 		}
 		return maxValue - minValue + 1;
 	}

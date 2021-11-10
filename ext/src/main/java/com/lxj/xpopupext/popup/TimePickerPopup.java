@@ -315,11 +315,20 @@ public class TimePickerPopup extends BottomPopupView {
             minute = calendar.get(Calendar.MINUTE);
             seconds = calendar.get(Calendar.SECOND);
         } else {
+            // 有传入日期且有分钟间隔时间
+            minute = this.date.get(Calendar.MINUTE);
+            if(minInterval > 0){
+                if(60 - minute < minInterval){
+                    this.date.add(Calendar.HOUR_OF_DAY, 1);
+                    minute = 0;
+                }
+            }
+
             year = this.date.get(Calendar.YEAR);
             month = this.date.get(Calendar.MONTH);
             day = this.date.get(Calendar.DAY_OF_MONTH);
             hours = this.date.get(Calendar.HOUR_OF_DAY);
-            minute = this.date.get(Calendar.MINUTE);
+//            minute = this.date.get(Calendar.MINUTE);
             seconds = this.date.get(Calendar.SECOND);
         }
         wheelTime.setPicker(year, month, day, hours, minute, seconds);

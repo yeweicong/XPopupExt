@@ -28,15 +28,15 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btnTimer).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Calendar date = Calendar.getInstance();
-//                date.set(2000, 5,1);
+                Calendar date = Calendar.getInstance();
+                date.set(2000, 5,1, 10, 56);
 //                Calendar date2 = Calendar.getInstance();
 //                date2.set(2020, 5,1);
                 TimePickerPopup popup = new TimePickerPopup(MainActivity.this)
                         .setMode(TimePickerPopup.Mode.YMDHM)
-                        .setMinInterval(5)
+//                        .setMinInterval(5)
                         .setCyclic(false)
-//                        .setDefaultDate(date)  //设置默认选中日期
+                        .setDefaultDate(date)  //设置默认选中日期
 //                        .setYearRange(1990, 1999) //设置年份范围
 //                        .setDateRange(date, date2) //设置日期范围
                         .setTimePickerListener(new TimePickerListener() {
